@@ -25,6 +25,15 @@ from sklearn.multioutput import MultiOutputClassifier
 
 
 def load_data(database_filepath):
+    """
+    Loads data from the SQL Database
+    Args:
+        database_filepath: The path to SQL databse
+    Returns:
+        X: Features
+        y: Targets    
+        category_names: The names of the categories
+    """
     # load data from database
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('messages', engine)
@@ -34,7 +43,18 @@ def load_data(database_filepath):
     return X, y, category_names
 
 
-def tokenize(text):    
+def tokenize(text):
+    """
+    Tokenize a sentence into words. 
+        Convert to lower case
+        Remove punctuations. 
+        Remove stop words
+        Lemmatize
+     Args:
+        text: Raw Sentence.    
+     Returns:
+        words: Tokenized output.    
+    """    
     # lower case
     text = text.lower()
     
@@ -55,6 +75,14 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Builds the ML Model. 
+        Create pipeline
+        Define Parameters
+        Define GridSearchCV
+     Returns:
+        cv: GridSearch Object.    
+    """
     
     pipeline = Pipeline([
     ('count_vect', CountVectorizer(tokenizer=tokenize)),
@@ -71,15 +99,14 @@ def build_model():
     
 
 def evaluate_model(model, X_test, y_test, category_names):
-    '''
-    Get classification report
+    """
+    Get classification report.
+        Print classification for each category. 
+        Print mean of f1 score for all categories.
     Input:
         Y_test - the actual labels for our test set
         Y_pred - the predicted labels for our test set
-    Return:
-      Dictionary of F1 scores for all classes.
-      Mean of F1 scores of all classes. 
-    '''
+    """
     y_pred = pd.DataFrame(model.predict(X_test), columns = category_names)
     f1_score_dict = {}
     for col in y_test.columns.values:
@@ -91,6 +118,12 @@ def evaluate_model(model, X_test, y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Save the ML model. 
+    Args:
+        model: The trained ML model.
+        model_filepath: The path where it should be saved
+    """
     pickle.dump(model, open(model_filepath, 'wb'))
 
 

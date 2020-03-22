@@ -3,6 +3,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Loads the data from CSVs
+    Args:
+        messages_filepath: Filepath to main data. 
+        categories_filepath: Filepath to the meta data. 
+    Returns:
+        df: combined dataframe.     
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     
@@ -12,6 +20,17 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Clean the raw_data.
+        Clean the category information
+            Convert text to get the column names. 
+            Separate category 'class'
+        Remove duplicates.
+    Args:
+        df: Raw Dataframe
+     Return:
+        df: clean dataframe. 
+    """
     categories_separated = df['categories'].str.split(';', expand = True)
     # select the first row of the categories dataframe
     row = categories_separated.iloc[0]
@@ -39,6 +58,12 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    Save the data to a SQL database.
+    Args:
+        df: Cleaned Dataframe.
+        database_filename: Path where data should be saved to.
+    """
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('messages', engine, index=False)  
 
