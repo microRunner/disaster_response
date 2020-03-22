@@ -38,7 +38,7 @@ It uses a repository of labelled messages provided by figure eight.
 ### NLP Pipeline 
 #### Code:
 - model/train_classifier.py
-#### key Steps:
+#### Key Steps:
 - Load data from SQL database.
 - Build the ML Model using pipelines. 
 - Train the model and evaludate performance.
@@ -51,5 +51,3 @@ It uses a repository of labelled messages provided by figure eight.
 - Load the data and the model.
 - Visualize the training data.
 - Predict the categories based on user input.
-
-
