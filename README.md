@@ -21,8 +21,11 @@ It uses a repository of labelled messages provided by figure eight.
 ## Screenshots of the App
 
 ### Loading screen
+![Alt text](https://github.com/microRunner/disaster_response/blob/master/data/Home_Screen.png?raw=true "Screenshot1")
+
 
 ### Classification of data
+![Alt text](https://github.com/microRunner/disaster_response/blob/master/data/Classify_Message.png?raw=true "Screenshot2")
 
 ## Modules
 
