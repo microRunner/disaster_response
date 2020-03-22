@@ -46,9 +46,13 @@ def index():
     category_analysis = category_analysis_df.sum().sort_values(ascending = False)
     category_names = category_analysis.index
     category_values = category_analysis.values
+    category_analysis_top_10 = category_analysis.nlargest(n=10)
+    category_names_top10 = category_analysis_top_10.index
+    category_values_top10 = category_analysis_top_10.values
     
     # create visuals
     graphs = [
+        # Graph1
         {
             'data': [
                 Bar(
@@ -67,6 +71,7 @@ def index():
                 }
             }
         },
+        # Graph2
         {
             'data': [
                 Bar(
@@ -82,6 +87,25 @@ def index():
                 },
                 'xaxis': {
                     'title': "Categories"
+                }
+            }
+        },
+        # Graph3
+        {
+            'data': [
+                Bar(
+                    x=category_names_top10,
+                    y=category_values_top10
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Top 10 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Top 10 Categories"
                 }
             }
         }
@@ -119,3 +143,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
